@@ -1,6 +1,6 @@
 # By WireSegal  (with help from TheDestruc7i0n)
 # You may use the code with credit
-# Tarball is at <>
+# Tarball is at https://cdnme.ga/pypixel/PyPixel-1.0.tar.gz
 # https://thedestruc7i0n.ca/pypixel
 
 import json
