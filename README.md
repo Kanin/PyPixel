@@ -11,6 +11,7 @@ Installation
 Download the tarball here: https://cdnme.ga/pypixel/PyPixel-1.0.tar.gz
 
 If you're using Mac or Linux:
+
 Using your terminal, go to the folder that contains the tarball.
 Then run these:
 ```
