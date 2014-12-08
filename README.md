@@ -14,4 +14,4 @@ If you're using Mac or Linux:
 
 ```tar PyPixel-1.0.tar.gz
 sudo python setup.py install
-```
+````
