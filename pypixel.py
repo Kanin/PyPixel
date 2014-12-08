@@ -1,3 +1,8 @@
+# By WireSegal  (with help from TheDestruc7i0n)
+# You may use the code with credit
+# Tarball is at <>
+# https://thedestruc7i0n.ca/pypixel
+
 import json
 import urllib2
 
