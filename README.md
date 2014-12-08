@@ -10,7 +10,11 @@ Installation
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Download the tarball here: cdnme.ga/pypixel/PyPixel-1.0.tar.gz
+>>>>>>> FETCH_HEAD
+=======
+Download the tarball here: https://cdnme.ga/pypixel/PyPixel-1.0.tar.gz
 >>>>>>> FETCH_HEAD
 =======
 Download the tarball here: https://cdnme.ga/pypixel/PyPixel-1.0.tar.gz
