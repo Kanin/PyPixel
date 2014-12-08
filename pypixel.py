@@ -1,8 +1,18 @@
 import json
 import urllib2
 
+def expandUrlData(data):
+	string = "?" # the base for any url
+	dataStrings = []
+	for i in data:
+		dataStrings.append(i+"="+data[i])
+	string += "&".join(dataStrings)
+	return string
+
+
 def urlopen(url, params):
-	req = urllib2.Request(url, params, { 'User-Agent': 'Mozilla/5.0' }) # lol spoofed the user agent as firefox, seems legit
+	url += expandUrlData(params)
+	req = urllib2.Request(url, headers={ 'User-Agent': 'Mozilla/5.0' }) # lol spoofed the user agent as firefox, seems legit
 	html = urllib2.urlopen(req).read()
 	return html
 
