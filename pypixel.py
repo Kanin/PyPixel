@@ -1,13 +1,5 @@
 # By WireSegal  (with help from TheDestruc7i0n)
 # You may use the code with credit
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-# Tarball is at https://cdnme.ga/pypixel/PyPixel-1.0.tar.gz
->>>>>>> FETCH_HEAD
-=======
-# Tarball is at https://cdnme.ga/pypixel/PyPixel-1.0.tar.gz
->>>>>>> FETCH_HEAD
 # https://thedestruc7i0n.ca/pypixel
 
 import json
