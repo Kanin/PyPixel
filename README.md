@@ -6,14 +6,13 @@ A Python Wrapper for The Hypixel API (https://api.hypixel.net). By @TheDestruc7i
 
 
 Installation
-============
+------------
 
 Download the tarball here: https://cdnme.ga/pypixel/PyPixel-1.0.tar.gz
 
 If you're using Mac or Linux:
 
-Using your terminal, go to the folder that contains the tarball.
-Then run these:
+Using your terminal, go to the folder that contains the tarball. Then run these:
 ```
 tar PyPixel-1.0.tar.gz
 cd PyPixel-1.0
@@ -33,7 +32,7 @@ python setup.py install
 
 
 Use
-===
+---
 
 To use the pypixel library, just add this into the top of your code:
 
@@ -46,3 +45,5 @@ To initate an API instance, use this command (pass your API key to the class):
 ```
 api = pypixel.HypixelAPI(key)
 ```
+
+Remember that you can only make 60 api calls per minute per key.
