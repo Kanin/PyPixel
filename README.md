@@ -1,7 +1,7 @@
 PyPixel
 =======
 
-A Python Wrapper for The Hypixel API. By @TheDestruc7i0n and @WireSegal
+A Python Wrapper for The Hypixel API (https://api.hypixel.net). By @TheDestruc7i0n and @WireSegal
 
 
 
