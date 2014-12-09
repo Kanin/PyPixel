@@ -30,3 +30,19 @@ Run this in command prompt:
 ```
 python setup.py install
 ```
+
+
+Use
+===
+
+To use the pypixel library, just add this into the top of your code:
+
+```
+import pypixel
+```
+
+To initate an API instance, use this command (pass your API key to the class):
+
+```
+api = pypixel.HypixelAPI(key)
+```
