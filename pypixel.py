@@ -76,7 +76,7 @@ class HypixelAPI:
 		params["byName"] = name
 		return json.loads(urlopen(url, params))
 
-	def guildByID(self, guildId):
+	def guildByID(self, guildID):
 		"""
 		string -> dict of a hypixel guild with id GUILDID
 		"""
