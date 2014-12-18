@@ -9,6 +9,7 @@ Allows you to make calls to the Hypixel API through python.
 
 import json
 import urllib2
+import time
 
 def expandUrlData(data):
 	"""
@@ -112,4 +113,40 @@ class HypixelAPI:
 		params["name"] = name
 		return json.loads(urlopen(url, params))
 
+
+class MultiKeyAPI:
+	"""
+	A class that handles using multiple keys for more requests-per-minute. 
+	Acts exactly like HypixelAPI for making API calls.
+	list -> api class
+	"""
+	def __init__(self, keys):
+		self.apis = [HypixelAPI(i) for i in keys]
+		self.apii = 0
+		self.api = self.apis[self.apii]
+
+	def _changeInstance(self):
+		self.apii += 1
+		if self.apii >= len(self.apis):
+			self.apii = 0
+		self.api = self.apis[self.apii]
+
+	def _throttleproofAPICall(self, callType, delay, debug, *args):
+		loaded = getattr(self.api, callType)(*args)
+		while not loaded["success"]:
+			if debug: 
+				print("Throttled, changing instance")
+			time.sleep(delay)
+			self._changeInstance()
+			loaded = getattr(self.api, callType)(*args)
+		return loaded
+
+	def keyRequest(self, delay = 5, debug = False): 		return self._throttleproofAPICall("keyRequest", delay, debug)
+	def friends(self, username, delay = 5, debug = False): 		return self._throttleproofAPICall("friends", delay, debug, username)
+	def guildByMember(self, username, delay = 5, debug = False): 	return self._throttleproofAPICall("guildByMember", delay, debug, username)
+	def guildByName(self, name, delay = 5, debug = False): 		return self._throttleproofAPICall("guildByName", delay, debug, name)
+	def guildByID(self, guildID, delay = 5, debug = False): 	return self._throttleproofAPICall("guildByID", delay, debug, guildID)
+	def session(self, username, delay = 5, debug = False): 		return self._throttleproofAPICall("session", delay, debug, username)
+	def userByUUID(self, uuid, delay = 5, debug = False): 		return self._throttleproofAPICall("userByUUID", delay, debug, uuid)
+	def userByName(self, name, delay = 5, debug = False): 		return self._throttleproofAPICall("userByName", delay, debug, name)
 
