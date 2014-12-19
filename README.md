@@ -8,14 +8,12 @@ A Python Wrapper for The Hypixel API (https://api.hypixel.net). By @TheDestruc7i
 Installation
 ============
 
-Download the tarball here: https://github.com/destruc7i0n/PyPixel/archive/1.1.1.tar.gz
+Download the zip here: https://github.com/destruc7i0n/PyPixel/archive/master.zip
 
 If you're using Mac or Linux:
 
-Using your terminal, go to the folder that contains the tarball. Then run these:
+Download the source zip, and unpack it. From the folder created, run this command: 
 ```
-tar PyPixel-1.0.tar.gz
-cd PyPixel-1.0
 sudo python setup.py install
 ```
 Enter your password and you're good to go.
