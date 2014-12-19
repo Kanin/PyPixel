@@ -119,11 +119,15 @@ class MultiKeyAPI:
 	A class that handles using multiple keys for more requests-per-minute. 
 	Acts exactly like HypixelAPI for making API calls.
 	list -> api class
+	list, int -> api class with delay of int seconds
+	list, int, bool -> api with delay of int seconds with debug mode in bool
 	"""
-	def __init__(self, keys):
+	def __init__(self, keys, delay = 5, debug = False):
 		self.apis = [HypixelAPI(i) for i in keys]
 		self.apii = 0
 		self.api = self.apis[self.apii]
+		self.delay = delay
+		self.debug = debug
 
 	def _changeInstance(self):
 		self.apii += 1
@@ -131,22 +135,22 @@ class MultiKeyAPI:
 			self.apii = 0
 		self.api = self.apis[self.apii]
 
-	def _throttleproofAPICall(self, callType, delay, debug, *args):
+	def _throttleproofAPICall(self, callType, *args):
 		loaded = getattr(self.api, callType)(*args)
 		while not loaded["success"]:
-			if debug: 
+			if self.debug: 
 				print("Throttled, changing instance")
-			time.sleep(delay)
+			time.sleep(self.delay)
 			self._changeInstance()
 			loaded = getattr(self.api, callType)(*args)
 		return loaded
 
-	def keyRequest(self, delay = 5, debug = False): 		return self._throttleproofAPICall("keyRequest", delay, debug)
-	def friends(self, username, delay = 5, debug = False): 		return self._throttleproofAPICall("friends", delay, debug, username)
-	def guildByMember(self, username, delay = 5, debug = False): 	return self._throttleproofAPICall("guildByMember", delay, debug, username)
-	def guildByName(self, name, delay = 5, debug = False): 		return self._throttleproofAPICall("guildByName", delay, debug, name)
-	def guildByID(self, guildID, delay = 5, debug = False): 	return self._throttleproofAPICall("guildByID", delay, debug, guildID)
-	def session(self, username, delay = 5, debug = False): 		return self._throttleproofAPICall("session", delay, debug, username)
-	def userByUUID(self, uuid, delay = 5, debug = False): 		return self._throttleproofAPICall("userByUUID", delay, debug, uuid)
-	def userByName(self, name, delay = 5, debug = False): 		return self._throttleproofAPICall("userByName", delay, debug, name)
+	def keyRequest(self): 			return self._throttleproofAPICall("keyRequest")
+	def friends(self, username): 		return self._throttleproofAPICall("friends", username)
+	def guildByMember(self, username): 	return self._throttleproofAPICall("guildByMember", username)
+	def guildByName(self, name): 		return self._throttleproofAPICall("guildByName", name)
+	def guildByID(self, guildID): 		return self._throttleproofAPICall("guildByID", guildID)
+	def session(self, username): 		return self._throttleproofAPICall("session", username)
+	def userByUUID(self, uuid): 		return self._throttleproofAPICall("userByUUID", uuid)
+	def userByName(self, name): 		return self._throttleproofAPICall("userByName", name)
 
