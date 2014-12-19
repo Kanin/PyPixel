@@ -22,7 +22,7 @@ Enter your password and you're good to go.
 
 If you're using Windows:
 
-Unpack the tarball. Open Command Prompt, and go into the folder named PyPixel-1.0.
+Unpack the zip. Open Command Prompt, and go into the folder named PyPixel-1.0.
 Run this in command prompt:
 ```
 python setup.py install
