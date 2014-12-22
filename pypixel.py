@@ -49,6 +49,14 @@ class HypixelAPI:
 		url = self.base + "key"
 		params = self.baseParams
 		return json.loads(urlopen(url, params))
+		
+	def boosters(self):
+		"""
+		nothing -> gets list of boosters
+		"""
+		url = self.base + "boosters"
+		params = self.baseParams
+		return json.loads(urlopen(url, params))
 
 	def friends(self, username):
 		"""
@@ -153,4 +161,5 @@ class MultiKeyAPI:
 	def session(self, username): 		return self._throttleproofAPICall("session", username)
 	def userByUUID(self, uuid): 		return self._throttleproofAPICall("userByUUID", uuid)
 	def userByName(self, name): 		return self._throttleproofAPICall("userByName", name)
+	def boosters(self): 			return self._throttleproofAPICall("boosters")
 
