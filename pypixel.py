@@ -145,7 +145,7 @@ class MultiKeyAPI:
 
 	def _throttleproofAPICall(self, callType, *args):
 		loaded = getattr(self.api, callType)(*args)
-		while not loaded["success"]:
+		while "throttle" in loaded:
 			if self.debug: 
 				print("Throttled, changing instance")
 			time.sleep(self.delay)
