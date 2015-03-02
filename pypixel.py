@@ -28,7 +28,7 @@ def urlopen(url, params={}):
 	string, dict -> data from the url
 	"""
 	url += expandUrlData(params)
-	req = urllib2.Request(url, headers={ 'User-Agent': 'Mozilla/5.0' }) # lol spoofed the user agent as firefox, seems legit
+	req = urllib2.Request(url, headers={ 'User-Agent': 'application/json' }) # lol spoofed the user agent as firefox, seems legit (01/03/2015 need to change, old does not work anymore)
 	html = urllib2.urlopen(req).read()
 	return html
 
