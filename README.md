@@ -60,3 +60,7 @@ api = pypixel.MultiKeyAPI([key1, key2, ... keyn])
 
 
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/destruc7i0n/pypixel/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
