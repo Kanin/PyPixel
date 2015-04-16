@@ -139,8 +139,7 @@ class MultiKeyAPI:
 
 	def _changeInstance(self):
 		self.apii += 1
-		if self.apii >= len(self.apis):
-			self.apii = 0
+		self.apii %= len(self.apis)
 		self.api = self.apis[self.apii]
 
 	def _throttleproofAPICall(self, callType, *args):
