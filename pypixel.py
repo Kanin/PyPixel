@@ -99,7 +99,7 @@ def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s"):
 	string -> get UUID from USERNAME
 	string, string -> get UUID from username via different API
 	"""
-	return json.loads(urlopen(url % username, {"at":str(int(time.time()))}))
+	return json.loads(urlopen(url % username, {"at":str(int(time.time()))}))["id"]
 
 class HypixelAPI:
 	"""
