@@ -61,6 +61,17 @@ class Player:
 			return self.api.guildByMember(self)
 		else:
 			return {}
+	def session(self, api=None):
+		"""
+		nothing -> session of this player
+		HypixelAPI|MultiKeyAPI -> session of this player, using that api instance
+		"""
+		if api:
+			return api.session(self)
+		elif self.api:
+			return self.api.session(self)
+		else:
+			return {}
 
 
 def expandUrlData(data):
