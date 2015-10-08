@@ -11,6 +11,14 @@ import json
 import urllib2
 import time
 
+class Player:
+	def __init__(self, name, url=None):
+		self.name = name
+		if url is not None:
+			self.uuid = getUUID(name, url)
+		else:
+			self.uuid = getUUID(name)
+
 def expandUrlData(data):
 	"""
 	dict -> a param string to add to a url
@@ -69,13 +77,17 @@ class HypixelAPI:
 	def friends(self, username):
 		"""
 		string -> dict of friends of the player USERNAME
+		Player -> dict of friends of the player
 		"""
+		if isinstance(username, Player): username = Player.name
 		return self.main("friends", {"player": username})
 
 	def guildByMember(self, username):
 		"""
 		string -> dict of a hypixel guild containing player USERNAME
+		Player -> dict of a hypixel guild containing the player
 		"""
+		if isinstance(username, Player): username = Player.name
 		return self.main("findGuild", {"byPlayer": username})
 
 	def guildByName(self, name):
@@ -93,19 +105,25 @@ class HypixelAPI:
 	def session(self, username):
 		"""
 		string -> dict of USERNAME's session
+		Player -> dict of player's session
 		"""
+		if isinstance(username, Player): username = Player.name
 		return self.main("session", {"player": username})
 
 	def userByUUID(self, uuid):
 		"""
 		string -> information about player with uuid UUID
+		Player -> information about the player
 		"""
+		if isinstance(uuid, Player): uuid = Player.uuid
 		return self.main("player", {"uuid": uuid})
 		
 	def userByName(self, name):
 		"""
 		string -> information about player with name NAME
+		Player -> information about the player
 		"""
+		if isinstance(name, Player): name = Player.name
 		return self.main("player", {"name": name})
 
 	def main(self, action, args={}):
