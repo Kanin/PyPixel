@@ -33,7 +33,8 @@ def urlopen(url, params={}):
 	
 def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s"):
 	"""
-	string, string -> get UUID from username
+	string -> get UUID from USERNAME
+	string, string -> get UUID from username via different API
 	"""
 	return json.loads(urlopen(url % username))
 
@@ -41,7 +42,7 @@ class HypixelAPI:
 	"""
 	A class that allows you to make hypixel api calls.
 	string -> api class
-        """
+	"""
 	base = "https://api.hypixel.net/"
 	def __init__(self, key):
 		self.key = key
