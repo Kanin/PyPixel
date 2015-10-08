@@ -46,79 +46,63 @@ class HypixelAPI:
 		"""
 		nothing -> dict of stats for your api key
 		"""
-		url = self.base + "key"
-		params = self.baseParams
-		return json.loads(urlopen(url, params))
+		return self.main("key")
 		
 	def boosters(self):
 		"""
 		nothing -> gets list of boosters
 		"""
-		url = self.base + "boosters"
-		params = self.baseParams
-		return json.loads(urlopen(url, params))
+		return self.main("boosters")
 
 	def friends(self, username):
 		"""
 		string -> dict of friends of the player USERNAME
 		"""
-		url = self.base + "friends"
-		params = self.baseParams
-		params["player"] = username
-		return json.loads(urlopen(url, params))
+		return self.main("friends", {"player": username})
 
 	def guildByMember(self, username):
 		"""
 		string -> dict of a hypixel guild containing player USERNAME
 		"""
-		url = self.base + "findGuild"
-		params = self.baseParams
-		params["byPlayer"] = username
-		return json.loads(urlopen(url, params))
+		return self.main("findGuild", {"byPlayer": username})
 
 	def guildByName(self, name):
 		"""
 		string -> dict of a hypixel guild named NAME
 		"""
-		url = self.base + "findGuild"
-		params = self.baseParams
-		params["byName"] = name
-		return json.loads(urlopen(url, params))
+		return self.main("findGuild", {"byName": name})
 
 	def guildByID(self, guildID):
 		"""
 		string -> dict of a hypixel guild with id GUILDID
 		"""
-		url = self.base + "guild"
-		params = self.baseParams
-		params["id"] = guildID
-		return json.loads(urlopen(url, params))
+		return self.main("guild", {"id": guildID})
 
 	def session(self, username):
 		"""
 		string -> dict of USERNAME's session
 		"""
-		url = self.base + "session"
-		params = self.baseParams
-		params["player"] = username
-		return json.loads(urlopen(url, params))
+		return self.main("session", {"player": username})
 
 	def userByUUID(self, uuid):
 		"""
 		string -> information about player with uuid UUID
 		"""
-		url = self.base + "player"
-		params = self.baseParams
-		params["uuid"] = uuid
-		return json.loads(urlopen(url, params))
+		return self.main("player", {"uuid": uuid})
 		
 	def userByName(self, name):
 		"""
 		string -> information about player with name NAME
 		"""
-		url = self.base + "player"
-		params = self.baseParams
-		params["name"] = name
+		return self.main("player", {"name": name})
+
+	def main(self, action, args={}):
+		"""
+		string -> result of api call ACTION
+		string, dict -> result of api call ACTION with arguments ARGS
+		"""
+		url = self.base + action
+		params = dict(args, **baseParams)
 		return json.loads(urlopen(url, params))
 
 
@@ -152,13 +136,14 @@ class MultiKeyAPI:
 			loaded = getattr(self.api, callType)(*args)
 		return loaded
 
-	def keyRequest(self): 			return self._throttleproofAPICall("keyRequest")
-	def boosters(self): 			return self._throttleproofAPICall("boosters")
-	def friends(self, username): 		return self._throttleproofAPICall("friends", username)
+	def keyRequest(self): 							return self._throttleproofAPICall("keyRequest")
+	def boosters(self): 								return self._throttleproofAPICall("boosters")
+	def friends(self, username): 				return self._throttleproofAPICall("friends", username)
 	def guildByMember(self, username): 	return self._throttleproofAPICall("guildByMember", username)
-	def guildByName(self, name): 		return self._throttleproofAPICall("guildByName", name)
-	def guildByID(self, guildID): 		return self._throttleproofAPICall("guildByID", guildID)
-	def session(self, username): 		return self._throttleproofAPICall("session", username)
-	def userByUUID(self, uuid): 		return self._throttleproofAPICall("userByUUID", uuid)
-	def userByName(self, name): 		return self._throttleproofAPICall("userByName", name)
+	def guildByName(self, name): 				return self._throttleproofAPICall("guildByName", name)
+	def guildByID(self, guildID): 			return self._throttleproofAPICall("guildByID", guildID)
+	def session(self, username): 				return self._throttleproofAPICall("session", username)
+	def userByUUID(self, uuid): 				return self._throttleproofAPICall("userByUUID", uuid)
+	def userByName(self, name): 				return self._throttleproofAPICall("userByName", name)
+	def main(self, action, args={}):		return self._throttleproofAPICall("main", action, args)
 
