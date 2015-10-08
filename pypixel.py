@@ -22,7 +22,6 @@ def expandUrlData(data):
 	string += "&".join(dataStrings)
 	return string
 
-
 def urlopen(url, params={}):
 	"""
 	string, dict -> data from the url
@@ -31,6 +30,12 @@ def urlopen(url, params={}):
 	req = urllib2.Request(url, headers={ 'User-Agent': 'application/json' })
 	html = urllib2.urlopen(req).read()
 	return html
+	
+def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/{username}"):
+	"""
+	string, string -> get UUID from username
+	"""
+	return json.loads(urlopen(url.format(username = username)))
 
 class HypixelAPI:
 	"""
