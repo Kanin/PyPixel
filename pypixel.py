@@ -54,7 +54,7 @@ class HypixelAPI:
 		"""
 		return self.main("boosters")
 		
-	def boosters(self):
+	def leaderboards(self):
 		"""
 		nothing -> gets list of leaderboards
 		"""
