@@ -53,6 +53,12 @@ class HypixelAPI:
 		nothing -> gets list of boosters
 		"""
 		return self.main("boosters")
+		
+	def boosters(self):
+		"""
+		nothing -> gets list of leaderboards
+		"""
+		return self.main("leaderboards")
 
 	def friends(self, username):
 		"""
