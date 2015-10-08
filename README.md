@@ -47,12 +47,12 @@ To initate an API instance, use this command (pass your API key to the class):
 api = pypixel.HypixelAPI(key)
 ```
 
-Remember that you can only make 60 API calls per minute per key.
+Remember that you can only make 120 API calls per minute per key.
 
 Multi-Key Instance
 ------------------
 
-If you want your api calls to be able to use more than one key (i.e. if you need more than 60 calls per minute), initialize your API with this instead, then use as normal.
+If you want your api calls to be able to use more than one key (i.e. if you need more than 120 calls per minute), initialize your API with this instead, then use as normal.
 ```
 api = pypixel.MultiKeyAPI([key1, key2, ... keyn])
 ```
