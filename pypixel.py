@@ -31,11 +31,11 @@ def urlopen(url, params={}):
 	html = urllib2.urlopen(req).read()
 	return html
 	
-def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/{username}"):
+def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s"):
 	"""
 	string, string -> get UUID from username
 	"""
-	return json.loads(urlopen(url.format(username = username)))
+	return json.loads(urlopen(url % username))
 
 class HypixelAPI:
 	"""
