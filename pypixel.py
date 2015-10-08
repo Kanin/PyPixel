@@ -187,7 +187,7 @@ class HypixelAPI:
 		string, dict -> result of api call ACTION with arguments ARGS
 		"""
 		url = self.base + action
-		params = dict(args, **baseParams)
+		params = dict(args, **self.baseParams)
 		return json.loads(urlopen(url, params))
 
 
