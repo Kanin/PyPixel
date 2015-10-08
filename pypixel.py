@@ -144,6 +144,7 @@ class MultiKeyAPI:
 
 	def keyRequest(self):               return self._throttleproofAPICall("keyRequest")
 	def boosters(self):                 return self._throttleproofAPICall("boosters")
+	def leaderboards(self):             return self._throttleproofAPICall("leaderboards")
 	def friends(self, username):        return self._throttleproofAPICall("friends", username)
 	def guildByMember(self, username):  return self._throttleproofAPICall("guildByMember", username)
 	def guildByName(self, name):        return self._throttleproofAPICall("guildByName", name)
