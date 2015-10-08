@@ -134,7 +134,7 @@ class HypixelAPI:
 		string -> dict of friends of the player USERNAME
 		Player -> dict of friends of the player
 		"""
-		if isinstance(username, Player): username = Player.name
+		if isinstance(username, Player): username = username.name
 		return self.main("friends", {"player": username})
 
 	def guildByMember(self, username):
@@ -142,7 +142,7 @@ class HypixelAPI:
 		string -> dict of a hypixel guild containing player USERNAME
 		Player -> dict of a hypixel guild containing the player
 		"""
-		if isinstance(username, Player): username = Player.name
+		if isinstance(username, Player): username = username.name
 		return self.main("findGuild", {"byPlayer": username})
 
 	def guildByName(self, name):
@@ -162,7 +162,7 @@ class HypixelAPI:
 		string -> dict of USERNAME's session
 		Player -> dict of player's session
 		"""
-		if isinstance(username, Player): username = Player.name
+		if isinstance(username, Player): username = username.name
 		return self.main("session", {"player": username})
 
 	def userByUUID(self, uuid):
@@ -170,7 +170,7 @@ class HypixelAPI:
 		string -> information about player with uuid UUID
 		Player -> information about the player
 		"""
-		if isinstance(uuid, Player): uuid = Player.uuid
+		if isinstance(uuid, Player): uuid = username.uuid
 		return self.main("player", {"uuid": uuid})
 		
 	def userByName(self, name):
@@ -178,7 +178,7 @@ class HypixelAPI:
 		string -> information about player with name NAME
 		Player -> information about the player
 		"""
-		if isinstance(name, Player): name = Player.name
+		if isinstance(name, Player): name = username.name
 		return self.main("player", {"name": name})
 
 	def main(self, action, args={}):
