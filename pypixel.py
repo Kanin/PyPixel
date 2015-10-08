@@ -170,7 +170,7 @@ class HypixelAPI:
 		string -> information about player with uuid UUID
 		Player -> information about the player
 		"""
-		if isinstance(uuid, Player): uuid = username.uuid
+		if isinstance(uuid, Player): uuid = uuid.uuid
 		return self.main("player", {"uuid": uuid})
 		
 	def userByName(self, name):
@@ -178,7 +178,7 @@ class HypixelAPI:
 		string -> information about player with name NAME
 		Player -> information about the player
 		"""
-		if isinstance(name, Player): name = username.name
+		if isinstance(name, Player): name = name.name
 		return self.main("player", {"name": name})
 
 	def main(self, action, args={}):
