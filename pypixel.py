@@ -12,12 +12,56 @@ import urllib2
 import time
 
 class Player:
-	def __init__(self, name, url=None):
+	"""
+	A class which wraps player info.
+	string -> Player object for that username
+	string, HypixelAPI|MultiKeyAPI -> Player object with that api for that username
+	string, HypixelAPI|MultiKeyAPI, string -> Player object with that api for that username, using that url to get the uuid
+	"""
+	def __init__(self, name, api=None, url=None):
 		self.name = name
+		if isinstance(api, HypixelAPI) or isinstance(api, MultiKeyAPI):
+			self.api = api
+		else:
+			self.api = None
 		if url is not None:
 			self.uuid = getUUID(name, url)
 		else:
 			self.uuid = getUUID(name)
+	def friends(self, api=None):
+		"""
+		nothing -> friends of this player
+		HypixelAPI|MultiKeyAPI -> friends of this player, using that api instance
+		"""
+		if api:
+			return api.friends(self)
+		elif self.api:
+			return self.api.friends(self)
+		else:
+			return {}
+	def info(self, api=None):
+		"""
+		nothing -> info on this player
+		HypixelAPI|MultiKeyAPI -> info on this player, using that api instance
+		"""
+		if api:
+			return api.userByUUID(self)
+		elif self.api:
+			return self.api.userByUUID(self)
+		else:
+			return {}
+	def guild(self, api=None):
+		"""
+		nothing -> guild of this player
+		HypixelAPI|MultiKeyAPI -> guild of this player, using that api instance
+		"""
+		if api:
+			return api.guildByMember(self)
+		elif self.api:
+			return self.api.guildByMember(self)
+		else:
+			return {}
+
 
 def expandUrlData(data):
 	"""
