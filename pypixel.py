@@ -144,6 +144,14 @@ class HypixelAPI:
 		"""
 		if isinstance(username, Player): username = username.name
 		return self.main("findGuild", {"byPlayer": username})
+		
+	def guildByMemberUUID(self, uuid):
+		"""
+		string -> dict of a hypixel guild containing player UUID
+		Player -> dict of a hypixel guild containing the player
+		"""
+		if isinstance(uuid, Player): uuid = uuid.uuid
+		return self.main("findGuild", {"byUuid": uuid})
 
 	def guildByName(self, name):
 		"""
