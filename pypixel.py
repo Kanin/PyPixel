@@ -6,10 +6,14 @@ https://thedestruc7i0n.ca/pypixel
 
 Allows you to make calls to the Hypixel API through python.
 """
+from __future__ import print_function
 
 import json
 import urllib2
 import time
+
+# If you want to use a custom printer function, you can overwrite pypixel.printer.
+printer = print
 
 class Player:
 	"""
@@ -20,7 +24,7 @@ class Player:
 	"""
 	def __init__(self, name, api=None, url=None):
 		self.name = name
-		if isinstance(api, HypixelAPI) or isinstance(api, MultiKeyAPI):
+		if isinstance(api, HypixelAPI):
 			self.api = api
 		else:
 			self.api = None
@@ -56,9 +60,9 @@ class Player:
 		HypixelAPI|MultiKeyAPI -> guild of this player, using that api instance
 		"""
 		if api:
-			return api.guildByMember(self)
+			return api.guildByMemberUUID(self)
 		elif self.api:
-			return self.api.guildByMember(self)
+			return self.api.guildByMemberUUID(self)
 		else:
 			return {}
 	def session(self, api=None):
@@ -199,7 +203,7 @@ class HypixelAPI:
 		return json.loads(urlopen(url, params))
 
 
-class MultiKeyAPI:
+class MultiKeyAPI(HypixelAPI):
 	"""
 	A class that handles using multiple keys for more requests-per-minute. 
 	Acts exactly like HypixelAPI for making API calls.
@@ -208,36 +212,30 @@ class MultiKeyAPI:
 	list, int, bool -> api with delay of int seconds with debug mode in bool
 	"""
 	def __init__(self, keys, delay = 5, debug = False):
+		if not keys:
+			raise TypeError("No keys provided!")
 		self.apis = [HypixelAPI(i) for i in keys]
 		self.apii = 0
 		self.api = self.apis[self.apii]
+		self.baseParams = self.api.baseParams
+		self.key = self.api.key
+
 		self.delay = delay
 		self.debug = debug
 
 	def _changeInstance(self):
-		self.apii += 1
-		self.apii %= len(self.apis)
+		self.apii = (self.apii+1) % len(self.apis)
 		self.api = self.apis[self.apii]
+		self.baseParams = self.api.baseParams
+		self.key = self.api.key
 
-	def _throttleproofAPICall(self, callType, *args):
-		loaded = getattr(self.api, callType)(*args)
+	def main(self, action, args={}):
+		loaded = self.api.main(action, args)
 		while "throttle" in loaded:
 			if self.debug: 
-				print("Throttled, changing instance")
+				printer("Throttled, changing instance")
 			time.sleep(self.delay)
 			self._changeInstance()
-			loaded = getattr(self.api, callType)(*args)
+			loaded = self.api.main(action, args)
 		return loaded
-
-	def keyRequest(self):               return self._throttleproofAPICall("keyRequest")
-	def boosters(self):                 return self._throttleproofAPICall("boosters")
-	def leaderboards(self):             return self._throttleproofAPICall("leaderboards")
-	def friends(self, username):        return self._throttleproofAPICall("friends", username)
-	def guildByMember(self, username):  return self._throttleproofAPICall("guildByMember", username)
-	def guildByName(self, name):        return self._throttleproofAPICall("guildByName", name)
-	def guildByID(self, guildID):       return self._throttleproofAPICall("guildByID", guildID)
-	def session(self, username):        return self._throttleproofAPICall("session", username)
-	def userByUUID(self, uuid):         return self._throttleproofAPICall("userByUUID", uuid)
-	def userByName(self, name):         return self._throttleproofAPICall("userByName", name)
-	def main(self, action, args={}):    return self._throttleproofAPICall("main", action, args)
 
