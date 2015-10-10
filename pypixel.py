@@ -231,11 +231,14 @@ class MultiKeyAPI(HypixelAPI):
 
 	def main(self, action, args={}):
 		loaded = self.api.main(action, args)
-		while "throttle" in loaded:
-			if self.debug: 
-				printer("Throttled, changing instance")
-			time.sleep(self.delay)
-			self._changeInstance()
-			loaded = self.api.main(action, args)
+		if "throttle" in loaded:
+			for i in self.apis:
+				if self.debug: 
+					printer("Throttled, changing instance")
+				time.sleep(self.delay)
+				self._changeInstance()
+				loaded = self.api.main(action, args)
+				if "throttle" not in loaded:
+					return loaded
 		return loaded
 
