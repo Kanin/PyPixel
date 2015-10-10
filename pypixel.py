@@ -37,7 +37,7 @@ class Player:
 		nothing -> friends of this player
 		HypixelAPI|MultiKeyAPI -> friends of this player, using that api instance
 		"""
-		if api:
+		if api and isinstance(api, HypixelAPI):
 			return api.friends(self)
 		elif self.api:
 			return self.api.friends(self)
@@ -48,7 +48,7 @@ class Player:
 		nothing -> info on this player
 		HypixelAPI|MultiKeyAPI -> info on this player, using that api instance
 		"""
-		if api:
+		if api and isinstance(api, HypixelAPI):
 			return api.userByUUID(self)
 		elif self.api:
 			return self.api.userByUUID(self)
@@ -59,7 +59,7 @@ class Player:
 		nothing -> guild of this player
 		HypixelAPI|MultiKeyAPI -> guild of this player, using that api instance
 		"""
-		if api:
+		if api and isinstance(api, HypixelAPI):
 			return api.guildByMemberUUID(self)
 		elif self.api:
 			return self.api.guildByMemberUUID(self)
@@ -70,7 +70,7 @@ class Player:
 		nothing -> session of this player
 		HypixelAPI|MultiKeyAPI -> session of this player, using that api instance
 		"""
-		if api:
+		if api and isinstance(api, HypixelAPI):
 			return api.session(self)
 		elif self.api:
 			return self.api.session(self)
