@@ -77,6 +77,15 @@ class Player:
 		else:
 			return {}
 
+def getType(inp):
+	"""
+	int -> 0 for UUID, 1 for USERNAME
+	"""
+	UUID = 0
+	USERNAME = 1
+	
+	if len(inp) == 32: return UUID
+	return USERNAME
 
 def expandUrlData(data):
 	"""
@@ -98,12 +107,12 @@ def urlopen(url, params={}):
 	html = urllib2.urlopen(req).read()
 	return html
 	
-def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s"):
+def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s", returnthis="id"):
 	"""
 	string -> get UUID from USERNAME
 	string, string -> get UUID from username via different API
 	"""
-	return json.loads(urlopen(url % username, {"at":str(int(time.time()))}))["id"]
+	return json.loads(urlopen(url % username, {"at":str(int(time.time()))}))[returnthis]
 
 class HypixelAPI:
 	"""
@@ -139,6 +148,7 @@ class HypixelAPI:
 		Player -> dict of friends of the player
 		"""
 		if isinstance(username, Player): username = username.name
+		if getType(username): username = getUUID(username)
 		return self.main("friends", {"player": username})
 
 	def guildByMember(self, username):
@@ -147,7 +157,7 @@ class HypixelAPI:
 		Player -> dict of a hypixel guild containing the player
 		"""
 		if isinstance(username, Player): username = username.name
-		return self.main("findGuild", {"byPlayer": username})
+		if getType(username): return self.guildByMemberUUID(getUUID(username))
 		
 	def guildByMemberUUID(self, uuid):
 		"""
@@ -175,6 +185,7 @@ class HypixelAPI:
 		Player -> dict of player's session
 		"""
 		if isinstance(username, Player): username = username.name
+		if getType(username): username = getUUID(username)
 		return self.main("session", {"player": username})
 
 	def userByUUID(self, uuid):
@@ -191,7 +202,7 @@ class HypixelAPI:
 		Player -> information about the player
 		"""
 		if isinstance(name, Player): name = name.name
-		return self.main("player", {"name": name})
+		if getType(username): return self.userByUUID(getUUID(username))
 
 	def main(self, action, args={}):
 		"""
