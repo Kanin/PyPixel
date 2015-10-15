@@ -60,9 +60,9 @@ class Player:
 		HypixelAPI|MultiKeyAPI -> guild of this player, using that api instance
 		"""
 		if api and isinstance(api, HypixelAPI):
-			return api.guildByMemberUUID(self)
+			return api.guildByID(api.guildByMemberUUID(self).get("guild"))
 		elif self.api:
-			return self.api.guildByMemberUUID(self)
+			return self.api.guildByID(self.api.guildByMemberUUID(self).get("guild"))
 		else:
 			return {}
 	def session(self, api=None):
@@ -177,7 +177,8 @@ class HypixelAPI:
 		"""
 		string -> dict of a hypixel guild with id GUILDID
 		"""
-		return self.main("guild", {"id": guildID})
+		if guildID: return self.main("guild", {"id": guildID}).update({"id":guildID})
+		return {"guild": None, "success": False}
 
 	def session(self, username):
 		"""
