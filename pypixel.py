@@ -111,8 +111,17 @@ def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s", 
 	"""
 	string -> get UUID from USERNAME
 	string, string -> get UUID from username via different API
+	string, string, string -> return another dictionary element from result
 	"""
-	return json.loads(urlopen(url % username, {"at":str(int(time.time()))}))[returnthis]
+	return json.loads(urlopen(url % username, {"at":str(int(time.time()))})).get(returnthis)
+	
+def hasPaid(username, url="https://mcapi.ca/other/haspaid/%s", returnthis="premium"):
+	"""
+	string -> if USERNAME has a premium account
+	string, string -> get has paid via different API
+	string, string, string -> return another dictionary element from result
+	"""
+	return json.loads(urlopen(url % username)).get(returnthis)
 
 class HypixelAPI:
 	"""
