@@ -158,7 +158,7 @@ class HypixelAPI:
 		"""
 		if isinstance(username, Player): username = username.name
 		if getType(username): username = getUUID(username)
-		return self.main("friends", {"player": username})
+		return self.main("friends", {"uuid": username})
 
 	def guildByMember(self, username):
 		"""
@@ -196,7 +196,7 @@ class HypixelAPI:
 		"""
 		if isinstance(username, Player): username = username.name
 		if getType(username): username = getUUID(username)
-		return self.main("session", {"player": username})
+		return self.main("session", {"uuid": username})
 
 	def userByUUID(self, uuid):
 		"""
@@ -212,7 +212,7 @@ class HypixelAPI:
 		Player -> information about the player
 		"""
 		if isinstance(name, Player): name = name.name
-		if getType(username): return self.userByUUID(getUUID(username))
+		if getType(name): return self.userByUUID(getUUID(name))
 
 	def main(self, action, args={}):
 		"""
@@ -262,4 +262,3 @@ class MultiKeyAPI(HypixelAPI):
 				if "throttle" not in loaded:
 					return loaded
 		return loaded
-
