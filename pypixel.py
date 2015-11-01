@@ -186,7 +186,7 @@ class HypixelAPI:
 		"""
 		string -> dict of a hypixel guild with id GUILDID
 		"""
-		if guildID: return self.main("guild", {"id": guildID})
+		if guildID: return dict(self.main("guild", {"id": guildID}), id = guildID)
 		return {"guild": None, "success": False}
 
 	def session(self, username):
