@@ -5,7 +5,6 @@ You may use this code, as long as you give credit
 https://thedestruc7i0n.ca/pypixel
 Allows you to make calls to the Hypixel API through python.
 """
-from __future__ import print_function
 
 import json
 import urllib.request
@@ -112,7 +111,6 @@ def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s", 
 	string, string -> get UUID from username via different API
 	string, string, string -> return another dictionary element from result
 	"""
-	print (urlopen(url % username, {"at":str(int(time.time()))}))
 	return json.loads(urlopen(url % username, {"at":str(int(time.time()))})).get(returnthis)
 	
 def hasPaid(username, url="https://mcapi.ca/other/haspaid/%s", returnthis="premium"):
