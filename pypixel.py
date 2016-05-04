@@ -11,11 +11,6 @@ import json
 import time
 import sys
 
-if (sys.version_info < (3, 0)):
-	import urllib2
-else:
-	import urllib.request
-
 # If you want to use a custom printer function, you can overwrite pypixel.printer.
 printer = print
 
@@ -108,9 +103,11 @@ def urlopen(url, params={}):
 	"""
 	url += expandUrlData(params)
 	if (sys.version_info >= (3, 0)):
+		import urllib.request
 		req = urllib.request.Request(url, headers={ 'User-Agent': 'application/json' })
 		html = urllib.request.urlopen(req).read().decode("utf-8")
 	else:
+		import urllib2
 		req = urllib2.Request(url, headers={ 'User-Agent': 'application/json' })
 		html = urllib2.urlopen(req).read()
 	return html
