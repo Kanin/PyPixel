@@ -9,8 +9,16 @@ Allows you to make calls to the Hypixel API through python.
 from __future__ import print_function
 
 import json
-import urllib2
 import time
+
+import sys
+
+if (sys.version_info >= (3, 0)): 
+	from urllib.request import Request, urlopen
+	curl = lambda req: urlopen(req).read().decode("utf-8")
+else:
+	from urllib2 import Request, urlopen
+	curl = lambda req: urlopen(req).read()
 
 # If you want to use a custom printer function, you can overwrite pypixel.printer.
 printer = print
@@ -103,9 +111,7 @@ def urlopen(url, params={}):
 	string, dict -> data from the url
 	"""
 	url += expandUrlData(params)
-	req = urllib2.Request(url, headers={ 'User-Agent': 'application/json' })
-	html = urllib2.urlopen(req).read()
-	return html
+	return curl(Request(url, headers={ 'User-Agent': 'application/json' }))
 	
 def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s", returnthis="id"):
 	"""
