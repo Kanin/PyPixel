@@ -3,14 +3,20 @@ PyPixel wrapper by @WireSegal
 With help from @TheDestruc7i0n
 You may use this code, as long as you give credit
 https://thedestruc7i0n.ca/pypixel
-
 Allows you to make calls to the Hypixel API through python.
 """
 from __future__ import print_function
 
 import json
-import urllib2
 import time
+import sys
+
+if (sys.version_info >= (3, 0)):
+	py3 = True
+	import urllib.request
+else:
+	py3 = False
+	import urllib2
 
 # If you want to use a custom printer function, you can overwrite pypixel.printer.
 printer = print
@@ -103,8 +109,12 @@ def urlopen(url, params={}):
 	string, dict -> data from the url
 	"""
 	url += expandUrlData(params)
-	req = urllib2.Request(url, headers={ 'User-Agent': 'application/json' })
-	html = urllib2.urlopen(req).read()
+	if (py3):
+		req = urllib.request.Request(url, headers={ 'User-Agent': 'application/json' })
+		html = urllib.request.urlopen(req).read().decode("utf-8")
+	else:
+		req = urllib2.Request(url, headers={ 'User-Agent': 'application/json' })
+		html = urllib2.urlopen(req).read()
 	return html
 	
 def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s", returnthis="id"):
