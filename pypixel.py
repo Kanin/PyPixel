@@ -138,6 +138,12 @@ class HypixelAPI:
 	def __init__(self, key):
 		self.key = key
 		self.baseParams = {"key": self.key}
+		
+	def watchdogStats(self):
+		"""
+		nothing -> watchdog stats
+		"""
+		return self.main("watchdogStats")
 
 	def keyRequest(self):
 		"""
