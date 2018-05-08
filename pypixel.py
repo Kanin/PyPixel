@@ -15,13 +15,20 @@ import sys
 
 if (sys.version_info >= (3, 0)): 
 	from urllib.request import Request, urlopen
+	from urllib.error import HTTPError
 	curl = lambda req: urlopen(req).read().decode("utf-8")
+	py3 = False
 else:
-	from urllib2 import Request, urlopen
+	from urllib2 import Request, urlopen, HTTPError
 	curl = lambda req: urlopen(req).read()
+	py3 = True
 
 # If you want to use a custom printer function, you can overwrite pypixel.printer.
 printer = print
+
+class UserNotFoundError(LookupError):
+	def __init__(self, user):
+		self.user=user
 
 class Player:
 	"""
@@ -106,7 +113,7 @@ def expandUrlData(data):
 	string += "&".join(dataStrings)
 	return string
 
-def urlopen(url, params={}):
+def urlread(url, params={}):
 	"""
 	string, dict -> data from the url
 	"""
@@ -119,15 +126,19 @@ def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s", 
 	string, string -> get UUID from username via different API
 	string, string, string -> return another dictionary element from result
 	"""
-	return json.loads(urlopen(url % username, {"at":str(int(time.time()))})).get(returnthis)
-	
-def hasPaid(username, url="https://mcapi.ca/other/haspaid/%s", returnthis="premium"):
-	"""
-	string -> if USERNAME has a premium account
-	string, string -> get has paid via different API
-	string, string, string -> return another dictionary element from result
-	"""
-	return json.loads(urlopen(url % username)).get(returnthis)
+	try:
+		resp = urlopen(url % username)
+		if py3 and resp.code or resp.getcode() == 204:
+			raise UserNotFoundError(username)
+	except HTTPError as e: #legacy catch.. 
+		if e.code == 204:
+			raise UserNotFoundError(username)
+		else:
+			raise e
+	resp = resp.read() if py3 else resp.read().decode('utf-8') # don't know why but putting this in json.load() wouldn't work..
+	if '"demo":' not in resp:
+		return json.loads(resp).get(returnthis)
+	else: raise UserNotFoundError(username)
 
 class HypixelAPI:
 	"""
@@ -233,7 +244,7 @@ class HypixelAPI:
 		"""
 		url = self.base + action
 		params = dict(args, **self.baseParams)
-		return json.loads(urlopen(url, params))
+		return json.loads(urlread(url, params))
 
 
 class MultiKeyAPI(HypixelAPI):
