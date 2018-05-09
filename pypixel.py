@@ -15,20 +15,15 @@ import sys
 
 if (sys.version_info >= (3, 0)): 
 	from urllib.request import Request, urlopen
-	from urllib.error import HTTPError
 	curl = lambda req: urlopen(req).read().decode("utf-8")
-	py3 = False
+	py2 = False
 else:
-	from urllib2 import Request, urlopen, HTTPError
+	from urllib2 import Request, urlopen
 	curl = lambda req: urlopen(req).read()
-	py3 = True
+	py2 = True
 
 # If you want to use a custom printer function, you can overwrite pypixel.printer.
 printer = print
-
-class UserNotFoundError(LookupError):
-	def __init__(self, user):
-		self.user=user
 
 class Player:
 	"""
@@ -126,19 +121,13 @@ def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s", 
 	string, string -> get UUID from username via different API
 	string, string, string -> return another dictionary element from result
 	"""
-	try:
-		resp = urlopen(url % username)
-		if py3 and resp.code or resp.getcode() == 204:
-			raise UserNotFoundError(username)
-	except HTTPError as e: #legacy catch.. 
-		if e.code == 204:
-			raise UserNotFoundError(username)
-		else:
-			raise e
-	resp = resp.read() if py3 else resp.read().decode('utf-8') # don't know why but putting this in json.load() wouldn't work..
+	resp = urlopen(url % username)
+	if resp.getcode() == 204:
+		raise LookupError("user: %s" % username)
+	resp = resp.read() if py2 else resp.read().decode('utf-8')
 	if '"demo":' not in resp:
 		return json.loads(resp).get(returnthis)
-	else: raise UserNotFoundError(username)
+	else: raise LookupError("user: %s" % username)
 
 class HypixelAPI:
 	"""
