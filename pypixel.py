@@ -16,9 +16,11 @@ import sys
 if (sys.version_info >= (3, 0)): 
 	from urllib.request import Request, urlopen
 	curl = lambda req: urlopen(req).read().decode("utf-8")
+	py2 = False
 else:
 	from urllib2 import Request, urlopen
 	curl = lambda req: urlopen(req).read()
+	py2 = True
 
 # If you want to use a custom printer function, you can overwrite pypixel.printer.
 printer = print
@@ -106,7 +108,7 @@ def expandUrlData(data):
 	string += "&".join(dataStrings)
 	return string
 
-def urlopen(url, params={}):
+def urlread(url, params={}):
 	"""
 	string, dict -> data from the url
 	"""
@@ -119,15 +121,13 @@ def getUUID(username, url="https://api.mojang.com/users/profiles/minecraft/%s", 
 	string, string -> get UUID from username via different API
 	string, string, string -> return another dictionary element from result
 	"""
-	return json.loads(urlopen(url % username, {"at":str(int(time.time()))})).get(returnthis)
-	
-def hasPaid(username, url="https://mcapi.ca/other/haspaid/%s", returnthis="premium"):
-	"""
-	string -> if USERNAME has a premium account
-	string, string -> get has paid via different API
-	string, string, string -> return another dictionary element from result
-	"""
-	return json.loads(urlopen(url % username)).get(returnthis)
+	resp = urlopen(url % username)
+	if resp.getcode() == 204:
+		raise LookupError("user: %s" % username)
+	resp = resp.read() if py2 else resp.read().decode('utf-8')
+	if '"demo":' not in resp:
+		return json.loads(resp).get(returnthis)
+	else: raise LookupError("user: %s" % username)
 
 class HypixelAPI:
 	"""
@@ -233,7 +233,7 @@ class HypixelAPI:
 		"""
 		url = self.base + action
 		params = dict(args, **self.baseParams)
-		return json.loads(urlopen(url, params))
+		return json.loads(urlread(url, params))
 
 
 class MultiKeyAPI(HypixelAPI):
