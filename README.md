@@ -1,8 +1,8 @@
 PyPixel
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-=======
 
 A Python Wrapper for The Hypixel API (https://api.hypixel.net). By @TheDestruc7i0n and @WireSegal
 
@@ -59,13 +59,6 @@ If you want your api calls to be able to use more than one key (i.e. if you need
 ```
 api = pypixel.MultiKeyAPI([key1, key2, ... keyn])
 ```
-
-
-
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/destruc7i0n/pypixel/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 
 ## Contributors ✨
