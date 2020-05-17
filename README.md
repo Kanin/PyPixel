@@ -1,7 +1,7 @@
 PyPixel
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 A Python Wrapper for The Hypixel API (https://api.hypixel.net). By @TheDestruc7i0n and @WireSegal
@@ -71,6 +71,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://thedestruc7i0n.ca"><img src="https://avatars2.githubusercontent.com/u/6181960?v=4" width="100px;" alt=""/><br /><sub><b>destruc7i0n</b></sub></a><br /><a href="https://github.com/CodingKanin/PyPixel/commits?author=destruc7i0n" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/yoni-segal-506941180/"><img src="https://avatars3.githubusercontent.com/u/6596492?v=4" width="100px;" alt=""/><br /><sub><b>Yoni Segal</b></sub></a><br /><a href="https://github.com/CodingKanin/PyPixel/commits?author=yrsegal" title="Code">💻</a></td>
   </tr>
 </table>
 
