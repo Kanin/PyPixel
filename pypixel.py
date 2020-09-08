@@ -34,6 +34,7 @@ class Player:
 	"""
 	def __init__(self, name, api=None, url=None):
 		self.name = name
+		self.skyblock_profile = 0
 		if isinstance(api, HypixelAPI):
 			self.api = api
 		else:
@@ -86,6 +87,28 @@ class Player:
 			return self.api.session(self)
 		else:
 			return {}
+
+	def getSkyblockProfile(self, api=None):
+		if api and isinstance(api, HypixelAPI):
+			return api.main("skyblock/profile", {"profile": self.uuid})
+		elif self.api:
+			return self.api.main("skyblock/profile", {"profile": self.uuid})
+		else:
+			return {}
+			
+	def getSkyblockAuctions(self, api=None):
+		if api and isinstance(api, HypixelAPI):
+			return api.main("skyblock/auctions", {"page": "0"})
+		elif self.api:
+			return self.api.main("skyblock/auctions", {"page": "0"})
+		else:
+			return {}
+		
+
+	def setMainSkyblockProfile(self, number):
+		index = number - 1
+		self.skyblock_profile = index
+	
 
 def getType(inp):
 	"""
@@ -225,7 +248,7 @@ class HypixelAPI:
 		"""
 		if isinstance(name, Player): name = name.name
 		if getType(name): return self.userByUUID(getUUID(name))
-
+	
 	def main(self, action, args={}):
 		"""
 		string -> result of api call ACTION
