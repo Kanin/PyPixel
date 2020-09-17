@@ -11,14 +11,20 @@ Installation
 
 Download the zip here: https://github.com/destruc7i0n/PyPixel/archive/master.zip
 
-If you're using Mac or Linux:
+If you're using Linux:
 
 Download the source zip, and unpack it. From the folder created, run this command: 
 ```
-sudo python setup.py install
+sudo python3 setup.py install
 ```
 Enter your password and you're good to go.
 
+If you're using Mac:
+
+Almost the same as Linux but the command is:
+```
+sudo python setup.py install
+```
 
 
 If you're using Windows:
